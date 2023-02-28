@@ -17,7 +17,7 @@ const changeTimer = (time) => {
 
 
 const startTimer = () => {
-  let time = Number(timer.textContent);
+  let time = +timer.textContent;
   changeTimer(time);
 
   let timerId = setTimeout(count = () => {
