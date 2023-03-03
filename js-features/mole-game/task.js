@@ -2,41 +2,28 @@ const hole = document.querySelectorAll('.hole');
 const countDead = document.getElementById('dead');
 const countLost = document.getElementById('lost');
 
-let dead = 0;
-let lost = 0;
-
 
 const startGame = () => {
   hole.forEach(item => {
-    item.addEventListener('click', (event) => {
-      if (event.target && item.classList.contains('hole_has-mole')) {
-        dead += 1;
-        countDead.textContent = dead;
-      } else {
-        lost += 1;
-        countLost.textContent = lost;
-      }
+    item.addEventListener('click', (e) => {
+      (e.target && item.classList.contains('hole_has-mole')) ? 
+        ++countDead.textContent : 
+        ++countLost.textContent;
       setTimeout(endGame, 100);
     });
+    item.addEventListener('dblclick', (e) => e.preventDefault());
   });
 };
 
 
 const endGame = () => {
-  if (+countDead.textContent === 10) {
-    alert('Победа!');
-    reset();
-  }
-  if (+countLost.textContent === 5) {
-    alert('Вы проиграли!');
-    reset();
-  }
+  if (countDead.textContent == 10) reset('Победа!');
+  if (countLost.textContent == 5) reset('Вы проиграли!');
 };
 
 
-const reset = () => {
-  dead = 0;
-  lost = 0;
+const reset = (message) => {
+  alert(message);
   countDead.textContent = 0;
   countLost.textContent = 0;
 };
