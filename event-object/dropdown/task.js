@@ -26,6 +26,9 @@ dropdownValues.forEach((dropdown, i) => {
         openList(i);
         clickLink(i);
       }
+      window.addEventListener('click', (e) => {
+        if (!e.target.closest('.dropdown')) list.classList.remove('dropdown__list_active');
+      });
     });
   });
 });
