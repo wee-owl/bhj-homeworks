@@ -92,22 +92,18 @@ class Game {
   renderTimer(word) {
     this.timerElement.textContent = word.length;
     let time = word.length;
-    let timerId;
 
-    const startTimer = (time) => {
-      if (timerId) clearInterval(timerId);
-      timerId = setInterval(() => {
-        if (time === 0) {
-          clearInterval(timerId);
-          this.timerElement.textContent = time;
-          this.fail();
-        } else {
-          time -= 1;
-          this.timerElement.textContent = time;
-        }
-      }, 1000);
-    };
-    startTimer(time);
+    clearInterval(this.timerId);
+
+    this.timerId = setInterval(() => {
+      if (time > 0) {
+        time -= 1;
+        this.timerElement.textContent = time;
+      } else {
+        this.timerElement.textContent = time;
+        this.fail();
+      }
+    }, 1000);
   }
 }
 
