@@ -1,14 +1,13 @@
 const revealBlocks = document.querySelectorAll('.reveal');
-
-const viewBlocks = (block) => {
+const viewBlocks = (reveal) => {
   window.addEventListener('scroll', () => {
-    let top = block.getBoundingClientRect().top;
-    let windowLeftBottom = document.documentElement.clientHeight;
-
-    top <= windowLeftBottom ? 
-      block.classList.add('reveal_active') : 
-      block.classList.remove('reveal_active');
+    const { innerHeight } = window;
+    const { top } = reveal.getBoundingClientRect();
+    if (top < innerHeight && top > 0) {
+      reveal.classList.add("reveal_active");
+    } else {
+      reveal.classList.remove("reveal_active");
+    }
   });
 };
-
 revealBlocks.forEach(reveal => viewBlocks(reveal));
