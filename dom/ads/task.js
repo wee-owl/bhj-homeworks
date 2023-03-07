@@ -1,28 +1,22 @@
-const rotatorsBlocks = document.querySelectorAll('.rotator');
+const rotatorCollection = document.querySelector('.rotator');
+let index = [...rotatorCollection.children].findIndex(el => el.classList.contains('rotator__case_active'));
+let timerId, speed;
 
-const changeRotatorMessage = (rotator) => {
-  const rotators = rotator.querySelectorAll('.rotator__case');
-  const rotatorsArray = [...rotators];
+timerId = setTimeout(changeWords = () => {
+  [...rotatorCollection.children][index].style.color = [...rotatorCollection.children][index].dataset.color;
+  [...rotatorCollection.children][index].classList.remove("rotator__case_active");
 
-  const changeWords = () => {
-    let indexStart = 0;
-    let indexNext = rotatorsArray.length - 1;
-    rotatorsArray[indexStart].style.color = rotatorsArray[indexStart].dataset.color;
-    let speed;
+  if ([...rotatorCollection.children][index].nextElementSibling !== null) {
+    [...rotatorCollection.children][index].nextElementSibling.classList.add("rotator__case_active");
+    [...rotatorCollection.children][index].style.color = [...rotatorCollection.children][index].dataset.color;
+    speed = [...rotatorCollection.children][index].dataset.speed;
+    index += 1;
+  } else {
+    document.querySelector('.rotator').firstElementChild.classList.add('rotator__case_active');
+    document.querySelector('.rotator').firstElementChild.style.color = document.querySelector('.rotator').firstElementChild.dataset.color;
+    speed = document.querySelector('.rotator').firstElementChild.dataset.speed;
+    index = 0;
+  }
 
-    let timerId = setInterval(() => {
-      rotatorsArray[indexStart].classList.remove('rotator__case_active');
-      if (indexStart === indexNext) {
-        indexStart = 0;
-      } else {
-        indexStart += 1;
-      }
-      rotatorsArray[indexStart].classList.add('rotator__case_active');
-      rotatorsArray[indexStart].style.color = rotatorsArray[indexStart].dataset.color;
-      speed = rotatorsArray[indexStart].dataset.speed;
-    }, `${+rotatorsArray[indexStart].dataset.speed}`);
-  };
-  changeWords();
-};
-
-rotatorsBlocks.forEach(rotator => changeRotatorMessage(rotator));
+  timerId = setTimeout(changeWords, speed);
+}, speed);
