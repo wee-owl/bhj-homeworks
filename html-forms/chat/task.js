@@ -26,7 +26,10 @@ window.addEventListener('click', ({target}) => {
     chatWidget.classList.add('chat-widget_active');
     timer();
   }
-  if (!target.closest('.chat-widget')) chatWidget.classList.remove('chat-widget_active');
+  if (!target.closest('.chat-widget')) {
+    chatWidget.classList.remove('chat-widget_active');
+    clearInterval(timerId);
+  }
 });
 
 
@@ -34,14 +37,12 @@ window.addEventListener('click', ({target}) => {
 let timerId, counter;
 const timer = () => {
   if (timerId) clearInterval(timerId)
-  counter = 1;
+  counter = 0;
   timerId = setInterval(() => {
     counter++;
-    // console.log(counter);
-    if (chatWidget.classList.contains('chat-widget_active')) {
-      if (counter % 30 === 0) addRobotMessage(inactiveRobotMessage)
-    } else {
-      clearInterval(timerId)
+    console.log(counter);
+    if (counter % 30 === 0 && chatWidget.classList.contains('chat-widget_active')) {
+      addRobotMessage(inactiveRobotMessage);
     }
   }, 1000);
 };
