@@ -3,6 +3,7 @@
   bottom: 0;
   right: 0;
 }
+
 .chat-widget__area {
   display: none;
   width: 300px;
@@ -35,8 +36,8 @@
   height: 250px;
   background: red;
   border-radius: 20px 0 0 0;
+  cursor: pointer;
 }
-
 
 .message {
   margin-bottom: 10px;
@@ -57,11 +58,13 @@
   margin-right: 5px;
   font-size: 10px;
 }
+
 .message_client .message__time {
   order: 2;
   margin-right: 0;;
   margin-left: 5px;
 }
+
 .message__text {
   order: 1;
   display: inline-block;
