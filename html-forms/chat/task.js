@@ -80,7 +80,7 @@ const addRobotMessage = (array) => {
 
 
 // отправка сообщений
-input.addEventListener('keypress', (e) => {
+input.addEventListener('keydown', (e) => {
   if (input.value && e.key === 'Enter') {
     addClientMessage();
     input.value = '';
