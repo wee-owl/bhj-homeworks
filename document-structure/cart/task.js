@@ -1,11 +1,12 @@
 const products = document.querySelectorAll('.product');
 const cartProducts = document.querySelector('.cart__products');
 
+
 const changeQuantity = (product) => {
   let value = Number(product.querySelector('.product__quantity-value').textContent);
   product.querySelector('.product__quantity-controls').addEventListener('click', (e) => {
     if (e.target.closest('.product__quantity-control_dec')) {
-      value = value <= 1 ? 0 : value -= 1;
+      value = value <= 1 ? 1 : value -= 1;
       product.querySelector('.product__quantity-value').textContent = value;
     }
     if (e.target.closest('.product__quantity-control_inc')) {
@@ -15,6 +16,7 @@ const changeQuantity = (product) => {
   });
 };
 
+
 const createCart = (product) => {
   const cartProduct = document.createElement('div');
   cartProduct.classList.add('cart__product');
@@ -22,13 +24,17 @@ const createCart = (product) => {
   cartProduct.innerHTML = `
     <img class="cart__product-image" src="${product.querySelector('.product__image').src}">
     <div class="cart__product-count">${product.querySelector('.product__quantity-value').textContent}</div>
+    <div class="cart__product-close">X</div>
   `;
   cartProducts.append(cartProduct);
 };
 
-const addCart = (product) => {
+
+const controlCart = (product) => {
+  document.querySelector('.cart').style.display = "none";
   product.querySelector('.product__add').addEventListener('click', (e) => {
     if (![...cartProducts.children].length) {
+      document.querySelector('.cart').style.display = "block";
       createCart(product);
     } else {
       if ([...cartProducts.children].some(el => el.dataset.id === product.dataset.id)) {
@@ -38,10 +44,18 @@ const addCart = (product) => {
         createCart(product);
       }
     }
+
+    [...cartProducts.children].forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.closest('.cart__product-close')) item.remove();
+        if (![...cartProducts.children].length) document.querySelector('.cart').style.display = "none";
+      });
+    });
   });
 };
 
+
 products.forEach(product => {
   changeQuantity(product);
-  addCart(product);
+  controlCart(product);
 });
