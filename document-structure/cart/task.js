@@ -31,7 +31,6 @@ const createCart = (product) => {
 
 
 const controlCart = (product) => {
-  document.querySelector('.cart').style.display = "none";
   product.querySelector('.product__add').addEventListener('click', (e) => {
     if (![...cartProducts.children].length) {
       document.querySelector('.cart').style.display = "block";
@@ -48,7 +47,7 @@ const controlCart = (product) => {
     [...cartProducts.children].forEach(item => {
       item.addEventListener('click', (e) => {
         if (e.target.closest('.cart__product-close')) item.remove();
-        if (![...cartProducts.children].length) document.querySelector('.cart').style.display = "none";
+        if (![...cartProducts.children].length) document.querySelector('.cart').style.display = "";
       });
     });
   });
@@ -59,3 +58,13 @@ products.forEach(product => {
   changeQuantity(product);
   controlCart(product);
 });
+
+
+// TODO: add localStorage
+// let productArray = JSON.parse(localStorage.getItem('product')) || [];
+// productArray.push({
+//   'id': product.dataset.id, 
+//   'product': product.querySelector('.product__title').innerText, 
+//   'quantity': product.querySelector('.product__quantity-value').innerText
+// });
+// localStorage.setItem('product', JSON.stringify(productArray));
