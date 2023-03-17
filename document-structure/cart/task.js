@@ -38,7 +38,9 @@ const controlCart = (product) => {
     } else {
       if ([...cartProducts.children].some(el => el.dataset.id === product.dataset.id)) {
         let item = [...cartProducts.children].filter(el => el.dataset.id === product.dataset.id);
-        item[0].querySelector('.cart__product-count').textContent = product.querySelector('.product__quantity-value').textContent;
+        item[0].querySelector('.cart__product-count').textContent = 
+          Number(item[0].querySelector('.cart__product-count').textContent) + 
+          Number(product.querySelector('.product__quantity-value').textContent);
       } else {
         createCart(product);
       }
@@ -58,13 +60,3 @@ products.forEach(product => {
   changeQuantity(product);
   controlCart(product);
 });
-
-
-// TODO: add localStorage
-// let productArray = JSON.parse(localStorage.getItem('product')) || [];
-// productArray.push({
-//   'id': product.dataset.id, 
-//   'product': product.querySelector('.product__title').innerText, 
-//   'quantity': product.querySelector('.product__quantity-value').innerText
-// });
-// localStorage.setItem('product', JSON.stringify(productArray));
