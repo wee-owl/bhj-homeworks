@@ -1,4 +1,5 @@
 const taskInput = document.getElementById('task__input');
+const taskList = document.getElementById('tasks__list');
 let taskArray = JSON.parse(localStorage.getItem('task')) || [];
 
 const createTask = () => {
@@ -6,24 +7,32 @@ const createTask = () => {
     let task = document.createElement('div');
     task.classList.add('task');
     task.innerHTML = `
-      <div class="task__title">${taskArray[i]}
-      </div>
+      <div class="task__title">${taskArray[i]}</div>
       <a href="" class="task__remove">&times;</a>
     `;
-    document.getElementById('tasks__list').prepend(task);
+    taskList.prepend(task);
   }
 };
 
 const controlTask = () => {
-  taskInput.addEventListener('keydown', (e) => {
-    if ((e.key === 'Enter') && (taskInput.value.trim() !== '')) {
+  document.getElementById('tasks__add').addEventListener('click', (e) => {
+    e.preventDefault();
+    if (taskInput.value.trim() !== '') {
       taskArray = JSON.parse(localStorage.getItem('task')) || [];
       taskArray.push(taskInput.value.trim());
       localStorage.setItem('task', JSON.stringify(taskArray));
+      taskList.insertAdjacentHTML('afterend', `
+        <div class="task">
+          <div class="task__title">${taskInput.value}</div>
+          <a href="#" class="task__remove">&times;</a>
+        </div>
+      `);
+      taskInput.value = '';
     }
   });
 
   document.addEventListener('click', (e) => {
+    e.preventDefault();
     if (e.target.closest('.task__remove')) {
       let taskValue = e.target.closest('.task__remove').previousElementSibling.innerText;
       taskArray = JSON.parse(localStorage.getItem('task')) || [];
