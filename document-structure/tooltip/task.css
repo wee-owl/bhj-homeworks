@@ -12,8 +12,9 @@
 }
 
 .tooltip {
-  position: fixed;
+  position: absolute;
   display: none;
+  max-width: max-content;
   background: black;
   padding: 5px;
   border-radius: 5px;
