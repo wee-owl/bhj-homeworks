@@ -81,7 +81,7 @@ const addRobotMessage = (array) => {
 
 // отправка сообщений
 input.addEventListener('keydown', (e) => {
-  if (input.value && e.key === 'Enter') {
+  if (input.value.trim() && e.key === 'Enter') {
     addClientMessage();
     input.value = '';
     input.blur();
